@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    x:Class="COVID19Tracker.Views.DashboardPage">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Page Header -->
+        <Grid
+            Grid.Row="0">
+
+            <Label
+                Text="{Binding Title, Mode=OneWay}"
+                Style="{StaticResource PageHeaderStyle}"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Margin="32,0,0,0"/>
+
+            <Label
+                Text="{Binding TodaysDate, Mode=OneWay, StringFormat='{0:MMMM dd, yyyy}'}"
+                Style="{StaticResource SmallPageHeaderStyle}"
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                Margin="0,0,32,0"/>
+
+        </Grid>
+
+        <!-- Main Content -->
+        <ScrollView
+            Grid.Row="1"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand">
+
+            <StackLayout
+                Orientation="Vertical"
+                Spacing="24"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding DataLoaded, Mode=OneWay}">
+
+                <!-- News Items -->
+                <cards:CoverFlowView
+                    HeightRequest="160"
+                    ItemsSource="{Binding COVIDNews, Mode=OneWay}"
+                    IsViewReusingEnabled="False"
+                    PositionShiftValue="110">
+
+                    <x:Arguments>
+                        <proc:CoverFlowProcessor ScaleFactor="0.7" OpacityFactor="0.1" />
+                    </x:Arguments>
+
+                    <cards:CoverFlowView.ItemTemplate>
+                        <DataTemplate>
+                            <pancake:PancakeView
+                                Padding="0"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill"
+                                Margin="60,0"
+                                CornerRadius="12">
+
+                                <Grid>
+
+                                    <!-- News Image -->
+                                    <ffImage:CachedImage
+                                        Source="{Binding urlToImage}"
+                                        VerticalOptions="Fill"
+                                        HorizontalOptions="Fill"
+                                        DownsampleToViewSize="False"
+                                        LoadingPlaceholder="black.png"
+                                        Aspect="AspectFill" />
+
+                                    <!-- Bottom Shadow -->
+                                    <pancake:PancakeView
+                                        BackgroundGradientAngle="0"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="End"
+                                        HeightRequest="60">
+                                        <pancake:PancakeView.BackgroundGradientStops>
+                                            <pancake:GradientStopCollection>
+                                                <pancake:GradientStop Color="#00000000" Offset="0" />
+                                                <pancake:GradientStop Color="#CC000000" Offset="1" />
+                                            </pancake:GradientStopCollection>
+                                        </pancake:PancakeView.BackgroundGradientStops>
+                                    </pancake:PancakeView>
+                                    
+                                    <!-- News Headline -->
+                                    <Label
+                                        Text="{Binding title}"
+                                        Style="{StaticResource NewsHeadlineTextStyle}"
+                                        VerticalOptions="End"
+                                        HorizontalOptions="Fill"
+                                        Margin="8,0,8,4"
+                                        MaxLines="2"
+                                        LineBreakMode="TailTruncation"
+                                        LineHeight="0.8"/>
+
+                                    <pancake:PancakeView
+                                        Padding="10,0"
+                                        HeightRequest="22"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        BackgroundColor="{StaticResource ActiveCasesColor}"
+                                        Margin="8,8,8,0"
+                                        CornerRadius="4">
+
+                                        <Label
+                                            Text="{Binding source.name}"
+                                            Style="{StaticResource NewsSourceTextStyle}"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            VerticalTextAlignment="Center"/>
+
+                                    </pancake:PancakeView>
+                                </Grid>
+
+                            </pancake:PancakeView>
+                        </DataTemplate>
+                    </cards:CoverFlowView.ItemTemplate>
+                </cards:CoverFlowView>
+
+
+            </StackLayout>
+
+            
+
+        </ScrollView>
+
+        <!-- Busy Indicator -->
+        <StackLayout 
+            IsVisible="{Binding IsBusy, Mode=OneWay}"
+            Grid.Row="1"
+            Spacing="12"
+            BackgroundColor="Transparent"
+            Padding="8,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <ActivityIndicator 
+                IsRunning="{Binding IsBusy, Mode=OneWay}"
+                Color="{StaticResource DarkTextColor}"
+                WidthRequest="30"
+                HeightRequest="30" />
+
+            <Label 
+                Text="{Binding LoadingText, Mode=OneWay}"
+                HorizontalOptions="Center"
+                Style="{StaticResource RegularTextStyle}"
+                HorizontalTextAlignment="Center" />
+
+        </StackLayout>
+
+        
+    </Grid>
+</ContentPage>

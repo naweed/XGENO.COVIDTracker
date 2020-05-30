@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    mc:Ignorable="d"
+    x:Class="COVID19Tracker.App">
+    <Application.Resources>
+
+        <!-- Colors -->
+        <Color x:Key="PageBackgroundColor">#FFFFF</Color>
+        <Color x:Key="DarkTextColor">#00133D</Color>
+        <Color x:Key="MediumTextColor">#999999</Color>
+        <Color x:Key="LightTextColor">#EEEEEE</Color>
+
+        <Color x:Key="TotalCasesColor">#00133D</Color>
+        <Color x:Key="ActiveCasesColor">#003CBF</Color>
+        <Color x:Key="RecoveredCasesColor">#EBB335</Color>
+        <Color x:Key="DeathCasesColor">#FF5C4D</Color>
+
+        <!-- Base Label Styles -->
+
+        <!-- Label Styles -->
+        <Style x:Key="PageHeaderStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="BoldFont" />
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        </Style>
+
+        <Style x:Key="SmallPageHeaderStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="MediumFont" />
+            <Setter Property="TextColor" Value="{StaticResource MediumTextColor}" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="RegularTextStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+            <Setter Property="FontFamily" Value="RegularFont" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="NewsHeadlineTextStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+            <Setter Property="FontFamily" Value="MediumFont" />
+        </Style>
+
+
+        <Style TargetType="Label" x:Key="NewsSourceTextStyle">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+            <Setter Property="FontFamily" Value="RegularFont" />
+        </Style>
+
+        <!-- ContentPage Style -->
+        <Style TargetType="ContentPage">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource PageBackgroundColor}" />
+            <Setter Property="ios:Page.UseSafeArea" Value="True" />
+        </Style>
+
+        <!-- Grid Styles -->
+        <Style TargetType="Grid">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            <Setter Property="RowSpacing" Value="0" />
+            <Setter Property="ColumnSpacing" Value="0" />
+        </Style>
+
+    </Application.Resources>
+</Application>
