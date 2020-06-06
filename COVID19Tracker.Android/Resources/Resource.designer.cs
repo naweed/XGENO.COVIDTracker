@@ -25,6 +25,7 @@ namespace COVID19Tracker.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Microcharts.Droid.Resource.String.library_name = global::COVID19Tracker.Droid.Resource.String.library_name;
 			global::PanCardView.Droid.Resource.Animation.abc_fade_in = global::COVID19Tracker.Droid.Resource.Animation.abc_fade_in;
 			global::PanCardView.Droid.Resource.Animation.abc_fade_out = global::COVID19Tracker.Droid.Resource.Animation.abc_fade_out;
 			global::PanCardView.Droid.Resource.Animation.abc_grow_fade_in_from_bottom = global::COVID19Tracker.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;

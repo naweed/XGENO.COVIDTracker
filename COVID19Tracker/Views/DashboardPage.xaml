@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+    xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+    xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    NavigationPage.HasNavigationBar="False"
+
     x:Class="COVID19Tracker.Views.DashboardPage">
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="150" />
+            <RowDefinition Height="140" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -32,6 +39,7 @@
 
         <!-- Main Content -->
         <ScrollView
+            Margin="0,-20,0,0"
             Grid.Row="1"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand">
@@ -71,7 +79,13 @@
                                         HorizontalOptions="Fill"
                                         DownsampleToViewSize="False"
                                         LoadingPlaceholder="black.png"
-                                        Aspect="AspectFill" />
+                                        Aspect="AspectFill">
+
+                                        <!--TODO-->
+                                        <!--<ffImage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer Navigate to News Details NavigationPage />
+                                        </ffImage:CachedImage.GestureRecognizers>-->
+                                    </ffImage:CachedImage>
 
                                     <!-- Bottom Shadow -->
                                     <pancake:PancakeView
@@ -122,10 +136,491 @@
                     </cards:CoverFlowView.ItemTemplate>
                 </cards:CoverFlowView>
 
+                <!-- Global Cases Section Header -->
+                <Label
+                    HorizontalOptions="Center"
+                    Text="COVID-19 Global Cases"
+                    Style="{StaticResource SectionHeaderStyle}"
+                    Margin="0,12,0,0"/>
 
-            </StackLayout>
+                <!-- Donut Chart -->
+                <Grid
+                    HeightRequest="180"
+                    HorizontalOptions="Fill"
+                    Margin="32,0,32,0">
 
-            
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="180" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Chart -->
+                    <microcharts:ChartView
+                        Chart="{Binding CaseStatsChart, Mode=OneWay}"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        BackgroundColor="Transparent"
+                        Grid.Column="0" />
+
+                    <!-- Custom Legend -->
+                    <Grid
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        RowSpacing="10"
+                        ColumnSpacing="12">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <!-- Active Cases -->
+                        <pancake:PancakeView
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HeightRequest="10"
+                            WidthRequest="24"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            BackgroundColor="{StaticResource ActiveCasesColor}"
+                            Margin="0,6,0,0"
+                            CornerRadius="5" />
+
+                        <StackLayout
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Orientation="Vertical"
+                            Spacing="0">
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="Active"
+                                Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.Active_Percentage, StringFormat='{0:0.0%}'}"
+                                Style="{StaticResource LegendPercentageTextStyle}" />
+
+                        </StackLayout>
+
+
+                        <!-- Recovered Cases -->
+                        <pancake:PancakeView
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HeightRequest="10"
+                            WidthRequest="24"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            BackgroundColor="{StaticResource RecoveredCasesColor}"
+                            Margin="0,6,0,0"
+                            CornerRadius="5" />
+
+                        <StackLayout
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Orientation="Vertical"
+                            Spacing="0">
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="Recovered"
+                                Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.Recovered_Percentage, StringFormat='{0:0.0%}'}"
+                                Style="{StaticResource LegendPercentageTextStyle}" />
+
+                        </StackLayout>
+
+
+                        <!-- Deaths -->
+                        <pancake:PancakeView
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HeightRequest="10"
+                            WidthRequest="24"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            BackgroundColor="{StaticResource DeathCasesColor}"
+                            Margin="0,6,0,0"
+                            CornerRadius="5" />
+
+                        <StackLayout
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Orientation="Vertical"
+                            Spacing="0">
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="Deaths"
+                                Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.Deaths_Percentage, StringFormat='{0:0.0%}'}"
+                                Style="{StaticResource LegendPercentageTextStyle}" />
+
+                        </StackLayout>
+                    </Grid>
+
+                </Grid>
+
+                <!-- Total Case Details -->
+                <Grid
+                    HorizontalOptions="Fill"
+                    HeightRequest="260"
+                    Margin="32,0,32,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="16" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Toal Cases -->
+                    <pancake:PancakeView
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Padding="16"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        CornerRadius="6"
+                        HasShadow="True"
+                        BackgroundColor="{StaticResource PageBackgroundColor}">
+
+                        <StackLayout
+                            Orientation="Vertical"
+                            VerticalOptions="Center"
+                            Spacing="4">
+
+                            <StackLayout
+                                Orientation="Horizontal"                                
+                                Spacing="8">
+
+                                <pancake:PancakeView
+                                    HeightRequest="12"
+                                    WidthRequest="12"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="{StaticResource TotalCasesColor}"
+                                    CornerRadius="4" />
+
+                                <Label
+                                    VerticalOptions="Center"
+                                    Text="Total Cases"
+                                    Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            </StackLayout>
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.cases, StringFormat='{0:#,##0}'}"
+                                Style="{StaticResource StatsCasesTextStyle}" />
+
+                            <Label
+                                Margin="0,-2,0,0"
+                                VerticalOptions="Center"
+                                Text="{Binding WorldStats.todayCases, StringFormat='{0:(+#,##0)}', Mode=OneWay}"
+                                Style="{StaticResource StatsPercentageTextStyle}" />
+
+
+                        </StackLayout>
+                    </pancake:PancakeView>
+
+                    <!-- Active Cases -->
+                    <pancake:PancakeView
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Padding="16"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        CornerRadius="6"
+                        HasShadow="True"
+                        BackgroundColor="{StaticResource PageBackgroundColor}">
+
+                        <StackLayout
+                            Orientation="Vertical"
+                            VerticalOptions="Center"
+                            Spacing="4">
+
+                            <StackLayout
+                                Orientation="Horizontal"                                
+                                Spacing="8">
+
+                                <pancake:PancakeView
+                                    HeightRequest="12"
+                                    WidthRequest="12"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="{StaticResource ActiveCasesColor}"
+                                    CornerRadius="4" />
+
+                                <Label
+                                    VerticalOptions="Center"
+                                    Text="Active"
+                                    Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            </StackLayout>
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.active, StringFormat='{0:#,##0}'}"
+                                Style="{StaticResource StatsCasesTextStyle}" />
+
+                            <Label
+                                Margin="0,-2,0,0"
+                                VerticalOptions="Center"
+                                Text="{Binding WorldStats.critical, StringFormat='{0:(#,##0 Critical)}', Mode=OneWay}"
+                                Style="{StaticResource StatsPercentageTextStyle}" />
+
+
+                        </StackLayout>
+
+                    </pancake:PancakeView>
+
+                    <!-- Recovered Cases -->
+                    <pancake:PancakeView
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Padding="16"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        CornerRadius="6"
+                        HasShadow="True"
+                        BackgroundColor="{StaticResource PageBackgroundColor}">
+
+                        <StackLayout
+                            Orientation="Vertical"
+                            VerticalOptions="Center"
+                            Spacing="4">
+
+                            <StackLayout
+                                Orientation="Horizontal"                                
+                                Spacing="8">
+
+                                <pancake:PancakeView
+                                    HeightRequest="12"
+                                    WidthRequest="12"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="{StaticResource RecoveredCasesColor}"
+                                    CornerRadius="4" />
+
+                                <Label
+                                    VerticalOptions="Center"
+                                    Text="Recovered"
+                                    Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            </StackLayout>
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.recovered, StringFormat='{0:#,##0}'}"
+                                Style="{StaticResource StatsCasesTextStyle}" />
+
+                            <Label
+                                Margin="0,-2,0,0"
+                                VerticalOptions="Center"
+                                Text=" "
+                                Style="{StaticResource StatsPercentageTextStyle}" />
+
+
+                        </StackLayout>
+
+                    </pancake:PancakeView>
+
+                    <!-- Death Cases -->
+                    <pancake:PancakeView
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Padding="16"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill"
+                        CornerRadius="6"
+                        HasShadow="True"
+                        BackgroundColor="{StaticResource PageBackgroundColor}">
+
+                        <StackLayout
+                            Orientation="Vertical"
+                            VerticalOptions="Center"
+                            Spacing="4">
+
+                            <StackLayout
+                                Orientation="Horizontal"                                
+                                Spacing="8">
+
+                                <pancake:PancakeView
+                                    HeightRequest="12"
+                                    WidthRequest="12"
+                                    VerticalOptions="Center"
+                                    BackgroundColor="{StaticResource DeathCasesColor}"
+                                    CornerRadius="4" />
+
+                                <Label
+                                    VerticalOptions="Center"
+                                    Text="Deaths"
+                                    Style="{StaticResource LegendHeaderTextStyle}" />
+
+                            </StackLayout>
+
+                            <Label
+                                HorizontalOptions="Start"
+                                Text="{Binding WorldStats.deaths, StringFormat='{0:#,##0}'}"
+                                Style="{StaticResource StatsCasesTextStyle}" />
+
+                            <Label
+                                Margin="0,-2,0,0"
+                                VerticalOptions="Center"
+                                Text="{Binding WorldStats.todayDeaths, StringFormat='{0:(+#,##0)}', Mode=OneWay}"
+                                Style="{StaticResource StatsPercentageTextStyle}" />
+
+
+                        </StackLayout>
+
+                    </pancake:PancakeView>
+
+
+                </Grid>
+
+                <!-- Top Countries Headlines -->
+                <Grid
+                    HorizontalOptions="Fill"
+                    Margin="32,12,32,0">
+
+                    <Label
+                        HorizontalOptions="Start"
+                        Text="Top Countries"
+                        VerticalOptions="Center"
+                        Style="{StaticResource SectionHeaderStyle}"/>
+
+                    <Label
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Text="View All >"
+                        TextColor="Blue"
+                        Style="{StaticResource SmallPageHeaderStyle}">
+
+                        <!--TODO-->
+                        <!--<Label.GestureRecognizers>
+                            <TapGestureRecognizer Navigate to all Countries Page />
+                        </Label.GestureRecognizers>-->
+
+                    </Label>
+
+                </Grid>
+
+                <!-- Countries List -->
+                <CollectionView
+                    SelectionMode="None"
+                    ItemSizingStrategy="MeasureFirstItem"
+                    HorizontalOptions="Fill"
+                    HeightRequest="200"
+                    ItemsSource="{Binding CountryStats, Mode=OneWay}"
+                    Margin="16,-24,0,0">
+
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="0" />
+                                </CollectionView.ItemsLayout>
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid
+                                            WidthRequest="140"
+                                            VerticalOptions="Fill"
+                                            Padding="16">
+
+                                            <pancake:PancakeView
+                                                HorizontalOptions="Fill"
+                                                VerticalOptions="Fill"
+                                                CornerRadius="6"
+                                                BackgroundColor="{StaticResource PageBackgroundColor}">
+
+                                                <pancake:PancakeView.Shadow>
+                                                    <pancake:DropShadow Color="#000000" Opacity="0.4" Offset="4,4" BlurRadius="6" />
+                                                </pancake:PancakeView.Shadow>
+
+                                                <Grid
+                                                    HorizontalOptions="Fill"
+                                                    VerticalOptions="Fill">
+
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Country Flag and Name -->
+                                                    <StackLayout
+                                                        Orientation="Horizontal"
+                                                        Spacing="12"
+                                                        Grid.Row="0"
+                                                        Margin="12">
+
+                                                        <Image
+                                                            Source="{Binding countryInfo.flag}"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="24"
+                                                            HeightRequest="16"
+                                                            Aspect="AspectFill"/>
+
+                                                        <Label
+                                                            VerticalOptions="Center"
+                                                            Text="{Binding country}"
+                                                            Style="{StaticResource CountryTextStyle}" />
+
+                                                    </StackLayout>
+
+                                                    <!-- No. of Cases -->
+                                                    <StackLayout
+                                                        Orientation="Vertical"
+                                                        HorizontalOptions="Fill"
+                                                        Grid.Row="1"
+                                                        Spacing="0"
+                                                        Margin="12,0,12,12">
+
+                                                        <Label
+                                                            Text="{Binding cases, StringFormat='{0:#,##0}'}"
+                                                            Style="{StaticResource CountryCasesTextStyle}" />
+
+                                                        <Label
+                                                            Margin="0,8,0,0"
+                                                            Text="{Binding Percentage_of_Global, StringFormat='{0:0.0%}'}"
+                                                            Style="{StaticResource CountryPercentageTextStyle}"
+                                                            HorizontalOptions="Center"/>
+
+                                                        <Label
+                                                            Margin="0,-4,0,0"
+                                                            Text="OF GLOBAL"
+                                                            Style="{StaticResource RegularTextStyle}"
+                                                            TextColor="{StaticResource MediumTextColor}"
+                                                            HorizontalOptions="Center"/>
+
+                                                    </StackLayout>
+
+                                                </Grid>
+
+                                            </pancake:PancakeView>
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+            </StackLayout>            
 
         </ScrollView>
 
