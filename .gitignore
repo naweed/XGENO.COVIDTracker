@@ -11,3 +11,5 @@
 /.DS_Store
 /._.DS_Store
 /._COVID19Tracker.sln
+/COVID19Tracker/bin/Debug/netstandard2.0
+/COVID19Tracker.Android/bin/Debug
