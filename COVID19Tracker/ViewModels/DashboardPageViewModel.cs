@@ -12,8 +12,8 @@ namespace COVID19Tracker.ViewModels
 {
     public class DashboardPageViewModel : ViewModelBase
     {
-        public List<News> _covidNews;
-        public List<News> COVIDNews
+        private List<News> _covidNews;
+        public List<News> CovidNews
         {
             get => _covidNews;
             set => SetProperty(ref _covidNews, value);
@@ -26,6 +26,13 @@ namespace COVID19Tracker.ViewModels
             set => SetProperty(ref _worldStats, value);
         }
 
+        private List<CountryStats> _countryStats;
+        public List<CountryStats> CountryStats
+        {
+            get => _countryStats;
+            set => SetProperty(ref _countryStats, value);
+        }
+
         private Chart _caseStatsChart;
         public Chart CaseStatsChart
         {
@@ -33,12 +40,6 @@ namespace COVID19Tracker.ViewModels
             set => SetProperty(ref _caseStatsChart, value);
         }
 
-        private List<CountryStats> _countryStats;
-        public List<CountryStats> CountryStats
-        {
-            get => _countryStats;
-            set => SetProperty(ref _countryStats, value);
-        }
 
         public DashboardPageViewModel()
         {
@@ -57,7 +58,7 @@ namespace COVID19Tracker.ViewModels
                 LoadingText = "Fetching lastest world news";
                 var newsWrapper = await RestHelper.GetAsync<NewsWrapper>(AppSession.NewsAPIURL);
 
-                COVIDNews = newsWrapper.articles.Where(_n => !string.IsNullOrEmpty(_n.urlToImage)).ToList();
+                CovidNews = newsWrapper.articles.Where(_n => !string.IsNullOrEmpty(_n.urlToImage)).ToList();
 
                 //Get the World Stats Information
                 LoadingText = "Getting total number of COVID cases";

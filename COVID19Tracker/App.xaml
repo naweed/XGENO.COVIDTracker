@@ -7,6 +7,7 @@
     xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     mc:Ignorable="d"
     x:Class="COVID19Tracker.App">
+    
     <Application.Resources>
 
         <!-- Colors -->
@@ -15,50 +16,44 @@
         <Color x:Key="MediumTextColor">#999999</Color>
         <Color x:Key="LightTextColor">#EEEEEE</Color>
         <Color x:Key="PrimaryColor">#00133D</Color>
-
+        <Color x:Key="AcrylicFrameBackgroundColor">#F1F1F1</Color>
+        <Color x:Key="BorderColor">#DDDDDD</Color>
 
         <Color x:Key="TotalCasesColor">#00133D</Color>
         <Color x:Key="ActiveCasesColor">#003CBF</Color>
         <Color x:Key="RecoveredCasesColor">#EBB335</Color>
         <Color x:Key="DeathCasesColor">#FF5C4D</Color>
 
-        <!-- Base Label Styles -->
+        <!-- Content Page Style -->
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
+            <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}" />
+            <Setter Property="ios:Page.UseSafeArea" Value="true" />
+        </Style>
 
         <!-- Label Styles -->
-        <Style x:Key="PageHeaderStyle" TargetType="Label">
+        <Style TargetType="Label" x:Key="PageHeaderStyle">
             <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
             <Setter Property="FontFamily" Value="BoldFont" />
-            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
         </Style>
 
-        <Style x:Key="SmallPageHeaderStyle" TargetType="Label">
+        <Style TargetType="Label" x:Key="SmallPageHeaderStyle">
             <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontFamily" Value="MediumFont" />
             <Setter Property="TextColor" Value="{StaticResource MediumTextColor}" />
-        </Style>
-
-        <Style TargetType="Label" x:Key="RegularTextStyle">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
-            <Setter Property="FontFamily" Value="RegularFont" />
-        </Style>
-
-        <Style TargetType="Label" x:Key="NewsHeadlineTextStyle">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
             <Setter Property="FontFamily" Value="MediumFont" />
-        </Style>
-
-        <Style TargetType="Label" x:Key="NewsSourceTextStyle">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
-            <Setter Property="FontFamily" Value="RegularFont" />
         </Style>
 
         <Style TargetType="Label" x:Key="SectionHeaderStyle">
             <Setter Property="FontSize" Value="22" />
             <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
             <Setter Property="FontFamily" Value="BoldFont" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="RegularTextStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+            <Setter Property="FontFamily" Value="RegularFont" />
         </Style>
 
         <Style TargetType="Label" x:Key="LegendHeaderTextStyle">
@@ -85,6 +80,18 @@
             <Setter Property="FontFamily" Value="MediumFont" />
         </Style>
 
+        <Style TargetType="Label" x:Key="NewsHeadlineTextStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+            <Setter Property="FontFamily" Value="MediumFont" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="NewsSourceTextStyle">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="{StaticResource LightTextColor}" />
+            <Setter Property="FontFamily" Value="RegularFont" />
+        </Style>
+
         <Style TargetType="Label" x:Key="CountryTextStyle">
             <Setter Property="FontSize" Value="22" />
             <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
@@ -97,27 +104,22 @@
             <Setter Property="FontFamily" Value="BoldFont" />
         </Style>
 
+        <Style TargetType="Label" x:Key="CountryNewCasesTextStyle">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+            <Setter Property="FontFamily" Value="MediumFont" />
+        </Style>
+
         <Style TargetType="Label" x:Key="CountryPercentageTextStyle">
             <Setter Property="FontSize" Value="36" />
             <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
             <Setter Property="FontFamily" Value="MediumFont" />
         </Style>
 
-
-        <!-- ContentPage Style -->
-        <Style TargetType="ContentPage">
-            <Setter Property="BackgroundColor"
-                    Value="{StaticResource PageBackgroundColor}" />
-            <Setter Property="ios:Page.UseSafeArea" Value="True" />
-            <Setter Property="NavigationPage.HasNavigationBar" Value="False" />
-        </Style>
-
-        <!-- Grid Styles -->
-        <Style TargetType="Grid">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="VerticalOptions" Value="FillAndExpand" />
-            <Setter Property="RowSpacing" Value="0" />
-            <Setter Property="ColumnSpacing" Value="0" />
+        <Style TargetType="Label" x:Key="Country2TextStyle">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+            <Setter Property="FontFamily" Value="RegularFont" />
         </Style>
 
     </Application.Resources>

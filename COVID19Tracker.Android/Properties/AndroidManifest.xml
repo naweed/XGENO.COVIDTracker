@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.xgeno.covid19tracker">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
-	<application android:label="COVID19Tracker.Android"></application>
+	<application android:label="COVID Tracker" android:icon="@mipmap/icon" android:roundIcon="@mipmap/icon"></application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

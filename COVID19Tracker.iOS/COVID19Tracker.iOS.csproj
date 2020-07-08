@@ -89,15 +89,33 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\60-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -108,10 +126,10 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.847" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="CardsView">
-      <Version>2.6.1</Version>
+      <Version>2.6.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms.PancakeView">
       <Version>1.4.2</Version>

@@ -3,3 +3,11 @@
 ################################################################################
 
 /.vs/COVID19Tracker
+/COVID19Tracker/obj
+/COVID19Tracker.Android/obj
+/COVID19Tracker.Android/.DS_Store
+/COVID19Tracker.Android/._.DS_Store
+/COVID19Tracker.iOS/obj
+/.DS_Store
+/._.DS_Store
+/._COVID19Tracker.sln
