@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using COVID19Tracker.Exceptions;
 using COVID19Tracker.Helpers;
 using COVID19Tracker.Models;
+using COVID19Tracker.Views;
 using Microcharts;
 using SkiaSharp;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace COVID19Tracker.ViewModels
 {
@@ -40,10 +44,33 @@ namespace COVID19Tracker.ViewModels
             set => SetProperty(ref _caseStatsChart, value);
         }
 
+        public Command<News> NavigateToNewsDetailsCommand { get; set; }
+        public Command AllCountriesPageCommand { get; set; }
 
-        public DashboardPageViewModel()
+        private INavigation _navigation;
+
+        public DashboardPageViewModel(INavigation navigation)
         {
             Title = "COVID-19 Report";
+
+            _navigation = navigation;
+
+            NavigateToNewsDetailsCommand = new Command<News>(NavigateToNewsPage);
+            AllCountriesPageCommand = new Command(NavigateToAllCountriesPage);
+        }
+
+        private async void NavigateToAllCountriesPage()
+        {
+            await _navigation.PushAsync(new AllCountriesPage());
+        }
+
+        private async void NavigateToNewsPage(News newsItem)
+        {
+            await Browser.OpenAsync(newsItem.url, new BrowserLaunchOptions
+            {
+                LaunchMode = BrowserLaunchMode.SystemPreferred,
+                TitleMode = BrowserTitleMode.Show
+            });
         }
 
         public async Task LoadCOVIDData()

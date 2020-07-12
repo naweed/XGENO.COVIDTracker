@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             mc:Ignorable="d"
+             x:Name="RootPage"
+             x:Class="COVID19Tracker.Views.AllCountriesPage">
+
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"
+        RowSpacing="0"
+        ColumnSpacing="0"
+        Padding="0">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Pager Headers -->
+        <Grid
+            Grid.Row="0"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <Image
+                Source="backarrow.png"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Margin="32,0,0,0"
+                HeightRequest="24"
+                WidthRequest="24">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand, Mode=OneWay}" />
+                </Image.GestureRecognizers>
+            </Image>
+
+
+            <Label 
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                Text="{Binding Title, Mode=OneWay}"
+                Style="{StaticResource PageHeaderStyle}"
+                Margin="72,0,0,0"/>
+
+            <Label 
+                HorizontalOptions="End"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                Text="{Binding TodaysDate, Mode=OneTime, StringFormat='{0:MMMM dd, yyyy}'}"
+                Style="{StaticResource SmallPageHeaderStyle}"
+                Margin="0,0,32,0"/>
+
+        </Grid>
+
+        <!-- Search Bar -->
+        <SearchBar
+            x:Name="searchBar"
+            Grid.Row="1"
+            Margin="20,-20,20,0"
+            HorizontalOptions="Fill"
+            Placeholder="Search for a country ..."
+            BackgroundColor="Transparent"
+            TextChanged="searchBar_TextChanged" />
+
+        <!-- Main Content -->
+        <CollectionView
+            Grid.Row="2"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            ItemSizingStrategy="MeasureFirstItem"
+            ItemsSource="{Binding CountryStats, Mode=OneWay}"
+            SelectionMode="Single"
+            SelectionChanged="CollectionView_SelectionChanged"
+            Margin="16,0">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        VerticalOptions="Fill"
+                        HeightRequest="{OnPlatform iOS=84, Android=88}"
+                        Padding="12">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal" />
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="White" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <pancakeview:PancakeView
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill"
+                            CornerRadius="6"
+                            BackgroundColor="{StaticResource PageBackgroundColor}">
+
+                            <pancakeview:PancakeView.Shadow>
+                                <pancakeview:DropShadow Color="#000000" Opacity="0.4" Offset="4,4" BlurRadius="6" />
+                            </pancakeview:PancakeView.Shadow>
+
+                            <Grid
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Country Flag -->
+                                <pancakeview:PancakeView
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    BorderColor="{StaticResource BorderColor}"
+                                    BorderThickness="1"
+                                    Margin="12"
+                                    VerticalOptions="Center"
+                                    WidthRequest="36"
+                                    HeightRequest="24">
+
+                                    <ffimageloading:CachedImage
+                                        Source="{Binding countryInfo.flag}"
+                                        DownsampleToViewSize="false"
+                                        LoadingPlaceholder="black.png"
+                                        HorizontalOptions="Fill"
+                                        VerticalOptions="Fill"
+                                        Aspect="AspectFill"/>
+
+                                </pancakeview:PancakeView>
+
+
+                                <!-- Country Name -->
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center"
+                                    Text="{Binding country}"
+                                    LineBreakMode="TailTruncation"
+                                    Margin="0,2,12,0"
+                                    Style="{StaticResource Country2TextStyle}" />
+
+
+                                <!-- No. of Cases -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Style="{StaticResource CountryNewCasesTextStyle}"
+                                    Margin="12,0,12,12"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="End">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding cases, StringFormat='{0:#,##0}'}" Style="{StaticResource CountryCasesTextStyle}" />
+                                            <Span Text=" (" />
+                                            <Span Text="{Binding todayCases, StringFormat='{0:+#,##0}'}" />
+                                            <Span Text=")" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+
+
+                            </Grid>
+                        </pancakeview:PancakeView>
+
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+
+
+        <!-- Busy Indicator -->
+        <StackLayout 
+            IsVisible="{Binding IsBusy, Mode=OneWay}"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Spacing="12"
+            BackgroundColor="Transparent"
+            Padding="8,0"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+
+            <ActivityIndicator 
+                IsRunning="{Binding IsBusy, Mode=OneWay}"
+                Color="{StaticResource PrimaryColor}"
+                WidthRequest="30"
+                HeightRequest="30" />
+
+            <Label 
+                Text="{Binding LoadingText, Mode=OneWay}"
+                HorizontalOptions="Center"
+                Style="{StaticResource RegularTextStyle}"
+                HorizontalTextAlignment="Center" />
+
+        </StackLayout>
+
+
+        <!-- Fader Control -->
+        <Grid
+            x:Name="PageFader"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            BackgroundColor="{StaticResource PageFadeColor}"
+            IsVisible="false"
+            Opacity="0">
+
+            <!-- Close Option-->
+            <Image
+                x:Name="ClosePopupPaneButton"
+                HeightRequest="40"
+                Opacity="0"
+                Source="close.png"
+                WidthRequest="40"
+                HorizontalOptions="Center"
+                VerticalOptions="Start">
+
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ClosePopupPaneButton_Tapped" />
+                </Image.GestureRecognizers>
+
+            </Image>
+
+        </Grid>
+
+        <!-- Contry Details Control -->
+        <Grid
+            x:Name="CountryDetailsGrid"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            TranslationY="{Binding Source={x:Reference RootPage}, Path=Height}"
+            Margin="16,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <BoxView
+                BackgroundColor="{StaticResource AcrylicFrameBackgroundColor}"
+                CornerRadius="20,20,0,0"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill" />
+
+            <!-- Country Name -->
+            <Label 
+                Text="{Binding SelectedCountry.country, Mode=OneWay}"
+                Style="{StaticResource CountryPercentageTextStyle}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                LineBreakMode="TailTruncation"
+                Margin="20"/>
+
+            <!-- Covid Details -->
+            <Grid
+                Grid.Row="1"
+                Margin="28,20"
+                RowSpacing="16"
+                HorizontalOptions="FillAndExpand">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Text="Tests Conducted So Far"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Text="{Binding SelectedCountry.tests, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="Total Cases"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Text="{Binding SelectedCountry.cases, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Text="Cases Reported Today"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Text="{Binding SelectedCountry.todayCases, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    Text="Total Recovered"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Text="{Binding SelectedCountry.recovered, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="4"
+                    Text="Currently Active"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    Text="{Binding SelectedCountry.active, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="5"
+                    Text="In Critical Condition"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    Text="{Binding SelectedCountry.critical, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="6"
+                    Text="Total Deaths"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="6"
+                    Text="{Binding SelectedCountry.deaths, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="7"
+                    Text="Deaths Reported Today"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="7"
+                    Text="{Binding SelectedCountry.todayDeaths, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="8"
+                    Text="Cases per Million Population"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="8"
+                    Text="{Binding SelectedCountry.casesPerOneMillion, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="0"
+                    Grid.Row="9"
+                    Text="Deaths per Million Population"
+                    Style="{StaticResource SmallPageHeaderStyle}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center" />
+
+                <Label 
+                    Grid.Column="1"
+                    Grid.Row="9"
+                    Text="{Binding SelectedCountry.deathsPerOneMillion, StringFormat='{0:#,##0}'}"
+                    Style="{StaticResource RegularTextStyle}"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center" />
+
+
+
+            </Grid>
+
+        </Grid>
+
+
+
+    </Grid>
+
+</ContentPage>

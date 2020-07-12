@@ -13,3 +13,4 @@
 /._COVID19Tracker.sln
 /COVID19Tracker/bin/Debug/netstandard2.0
 /COVID19Tracker.Android/bin/Debug
+/COVID19Tracker.iOS/bin/iPhoneSimulator/Debug

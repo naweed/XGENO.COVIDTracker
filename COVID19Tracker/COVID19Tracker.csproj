@@ -20,8 +20,6 @@
     <PackageReference Include="Microcharts.Forms" Version="0.8.5-pre" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
     <Folder Include="Resources\" />
     <Folder Include="Resources\Fonts\" />
@@ -37,5 +35,10 @@
     <EmbeddedResource Include="Resources\Fonts\DMSans-Bold.ttf" />
     <EmbeddedResource Include="Resources\Fonts\DMSans-Medium.ttf" />
     <EmbeddedResource Include="Resources\Fonts\DMSans-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Views\AllCountriesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

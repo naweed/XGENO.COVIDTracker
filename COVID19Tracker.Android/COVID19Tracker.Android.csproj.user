@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>nexus_6p_q_10_0_-_api_29</SelectedDevice>
     <DefaultDevice>nexus_6p_q_10_0_-_api_29</DefaultDevice>
+    <AndroidDesignerPreferredTheme>Theme.AppCompat.Light.NoActionBar</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

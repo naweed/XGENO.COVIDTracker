@@ -18,6 +18,7 @@
         <Color x:Key="PrimaryColor">#00133D</Color>
         <Color x:Key="AcrylicFrameBackgroundColor">#F1F1F1</Color>
         <Color x:Key="BorderColor">#DDDDDD</Color>
+        <Color x:Key="PageFadeColor">#DDFFFFFF</Color>
 
         <Color x:Key="TotalCasesColor">#00133D</Color>
         <Color x:Key="ActiveCasesColor">#003CBF</Color>
